@@ -42,23 +42,21 @@ const PatientForm = () => {
     email,
     phone,
   }: z.infer<typeof UserFormValidation>) {
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       const userData = { name, email, phone };
       const user = await createUser(userData);
-      console.log(user);
 
       if (user) {
         router.push(`/patients/${user.$id}/register`);
       } else {
-        console.log("No usser found");
+        console.log("No user found");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    //  finally {
-    //   setIsLoading(false);
-    // }
   }
 
   return (
