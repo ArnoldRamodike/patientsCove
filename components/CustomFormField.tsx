@@ -19,6 +19,8 @@ import PhoneInput from "react-phone-number-input";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 interface CustomProps {
   control: Control<any>;
@@ -68,6 +70,19 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
+    case FormFieldType.TEXTAREA:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+          <FormControl>
+            <Textarea
+              placeholder={placeholder}
+              {...field}
+              className="shad-texarea border-0"
+              disabled={props.disabled}
+            />
+          </FormControl>
+        </div>
+      );
     case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
@@ -87,7 +102,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <div className="flex rounded-md border border-x-dark-500 bg-dark-400">
           <Image
-            src="/assets/icons/calender.svg"
+            src="/assets/icons/calendar.svg"
             alt="Calendar"
             height={24}
             width={24}
@@ -121,6 +136,22 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               {props.children}
             </SelectContent>
           </Select>
+        </FormControl>
+      );
+
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className=" flex items-center gap-4">
+            <Checkbox
+              id={props.name}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+            <label htmlFor={props.name} className="checkbox-label">
+              {props.label}
+            </label>
+          </div>
         </FormControl>
       );
 
