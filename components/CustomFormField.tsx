@@ -90,7 +90,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             defaultCountry="US"
             placeholder={placeholder}
             international
-            withContryCallingCode
+            withcontrycallingcode
             value={field.value as E164Number | undefined}
             onChange={field.onChange}
             className="input-phone"
@@ -110,7 +110,6 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           <FormControl>
             <DatePicker
               selected={field.value}
-              onChange={(date) => field.onChange(date)}
               dateFormat={dateFormat ?? "MM/dd/yyyy"}
               showTimeSelect={showTimeSelect ?? false}
               timeInputLabel="Time:"
@@ -121,7 +120,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
 
     case FormFieldType.SKELETON:
-      return renderSkeleton ? renderSkeleton(field) : null;
+      return props.renderSkeleton ? props.renderSkeleton(field) : null;
 
     case FormFieldType.SELECT:
       return (
@@ -142,7 +141,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.CHECKBOX:
       return (
         <FormControl>
-          <div className=" flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <Checkbox
               id={props.name}
               checked={field.value}
@@ -158,24 +157,11 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     default:
       break;
   }
-  return <Input type="text" placeholder="Joh Doe" />;
+  return <Input type="text" placeholder="John Doe" />;
 };
 
 const CustomFormField = (props: CustomProps) => {
-  const {
-    control,
-    fieldType,
-    iconAlt,
-    iconSrc,
-    label,
-    name,
-    placeholder,
-    children,
-    dateFormat,
-    disabled,
-    renderSkeleton,
-    showTimeSelect,
-  } = props;
+  const { control, fieldType, label, name } = props;
   return (
     <FormField
       control={control}
