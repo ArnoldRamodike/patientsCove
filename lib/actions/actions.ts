@@ -36,7 +36,26 @@ export const getUser = async (userId: string) => {
 
         return parseStringify(user);
     } catch (error) {
-        console.log("GETUSER", error);
+        console.log("GET_USER", error);
+        
+    }
+}
+
+export const getPatient = async (userId: string) => {
+    try {
+        const patients  = await databases.listDocuments(
+            DATABASE_ID!,
+            PATIENT_COLLECTION_ID!,
+            // [
+            //     Query.equal("userId", [userId])
+            // ]
+        );
+        // console.log("Patient data", patients.documents[0]);
+        
+
+        return parseStringify(patients.documents[0]);
+    } catch (error) {
+        console.log("GET_PATIENT", error);
         
     }
 }
