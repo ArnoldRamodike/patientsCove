@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "../ui/button";
 import { Form } from "../ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
@@ -47,15 +46,16 @@ const AppintmentForm = ({
 
   async function onSubmit(values: z.infer<typeof AppintmentFormValidation>) {
     setIsLoading(true);
+    let status;
     switch (type) {
       case "cancel":
-        buttonLabel = "Cancel Appointment";
+        status = "pending";
         break;
       case "create":
-        buttonLabel = "Create Appointment";
+        status = "scheduled";
         break;
       case "schedule":
-        buttonLabel = "Schedule Appointment";
+        status = "cancelled";
         break;
 
       default:
@@ -68,7 +68,7 @@ const AppintmentForm = ({
           patient: patientId,
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
-          reson: values.reason!,
+          reason: values.reason!,
           note: values.note,
           status: status as Status,
         };
@@ -78,7 +78,7 @@ const AppintmentForm = ({
         if (appointment) {
           form.reset();
           router.push(
-            `patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
+            `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
           );
         }
       }

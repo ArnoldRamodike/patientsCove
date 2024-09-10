@@ -1,7 +1,7 @@
 'use server'
 
 import { ID, Query } from "node-appwrite"
-import { BUCKET_ID, DATABASE_ID, databases, ENDPOINT, APPOINTMENT_COLLECTION_ID, PROJECT_ID, storage, users } from "../appwrite.config"
+import { BUCKET_ID, DATABASE_ID, databases, APPOINTMENT_COLLECTION_ID } from "../appwrite.config"
 import { parseStringify } from "../utils"
 import { InputFile } from "node-appwrite/file"
 
@@ -20,5 +20,21 @@ export const createAppointment = async ({ ...appointment}: CreateAppointmentPara
         return parseStringify(newAppintment);
     } catch (error) {
         console.log("APPOINTMENT", error);
+    }
+}
+
+
+export const getAppointment = async (appointmentId: string) => {
+    try {
+        const appointment  = await databases.getDocument(
+            DATABASE_ID!,
+            APPOINTMENT_COLLECTION_ID!,
+            appointmentId
+        );        
+
+        return parseStringify(appointment);
+    } catch (error) {
+        console.log("GET_PATIENT", error);
+        
     }
 }
