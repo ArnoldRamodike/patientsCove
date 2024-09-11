@@ -5,6 +5,7 @@ import { BUCKET_ID, DATABASE_ID, databases, APPOINTMENT_COLLECTION_ID } from "..
 import { parseStringify } from "../utils"
 import { InputFile } from "node-appwrite/file"
 import { Appointment } from "@/types/appwrite.types"
+import { revalidatePath } from "next/cache"
 
 
 export const createAppointment = async ({ ...appointment}: CreateAppointmentParams) => {
@@ -39,6 +40,7 @@ export const getAppointment = async (appointmentId: string) => {
         
     }
 }
+
 export const getRecentAppointmentList = async () => {
     try {
         const appointments  = await databases.listDocuments(
@@ -77,6 +79,31 @@ export const getRecentAppointmentList = async () => {
         return parseStringify(data);
     } catch (error) {
         console.log("GET_APPOINTMENTS", error);
+        
+    }
+}
+
+
+export const updatedAppointment = async ({appointmentId, userId, appointment, type} : UpdateAppointmentParams) => {
+    try {
+        const updatedAppointment  = await databases.updateDocument(
+            DATABASE_ID!,
+            APPOINTMENT_COLLECTION_ID!,
+            appointmentId,
+            appointment
+        );      
+        
+        if (!updatedAppointment) {
+            throw new Error("Appointment not found!")
+        }
+
+        // SMS notification
+
+        revalidatePath("/admin")
+
+        return parseStringify(updatedAppointment);
+    } catch (error) {
+        console.log("UPDATE_APPOINTMENT", error);
         
     }
 }
