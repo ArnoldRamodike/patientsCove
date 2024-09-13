@@ -46,7 +46,7 @@ const AppintmentForm = ({
     defaultValues: {
       primaryPhysician: appointment ? appointment.primaryPhysician : "",
       schedule: appointment
-        ? new Date(appointment.schedule)
+        ? new Date(appointment?.schedule)
         : new Date(Date.now()),
       reason: appointment?.reason || "",
       note: appointment?.note || "",

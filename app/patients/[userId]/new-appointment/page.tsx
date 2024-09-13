@@ -6,8 +6,6 @@ import React from "react";
 const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId);
 
-  // console.log("patient: ", patient);
-
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
