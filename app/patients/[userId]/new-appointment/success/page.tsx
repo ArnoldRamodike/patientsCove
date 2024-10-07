@@ -76,7 +76,7 @@ const Success = async ({
           </Link>
         </Button>
 
-        <p className="copyright"> copy; 2024 CarePulse</p>
+        <p className="copyright"> &copy; 2024 CarePulse</p>
       </div>
     </div>
   );
