@@ -26,9 +26,14 @@ export default function Home({ searchParams }: SearchParamProps) {
             <p className="justify-items-end text-dark-600 xl:text-left">
               @copy; 2024 CarePulse
             </p>
-            <Link href={"/?admin=true"} className="text-green-500">
-              Admin
-            </Link>
+            <div className="flex gap-5">
+              <Link href={"/login"} className="text-light-200">
+                Login
+              </Link>
+              <Link href={"/?admin=true"} className="text-green-500">
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
       </section>
