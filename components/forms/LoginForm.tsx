@@ -8,7 +8,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { PatientFormDefaultValues } from "@/constants";
-import { registerPatient } from "@/lib/actions/actions";
+import { createUser, registerPatient } from "@/lib/actions/actions";
 import { PatientFormValidation } from "@/lib/validation";
 
 // import { FileUploader } from "../FileUploader";
@@ -16,7 +16,7 @@ import SubmitButton from "../SubmitButton";
 import CustomFormField from "../CustomFormField";
 import { FormFieldType } from "./PatientForm";
 
-const RegisterForm = ({ user }: { user: User }) => {
+const LoginForm = ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,37 +24,24 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      // email: user.email,
-      // phone: user.phone,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true);
 
-    // Store file info in form data as
-    let formData;
-    if (
-      values.identificationDocument &&
-      values.identificationDocument?.length > 0
-    ) {
-      const blobFile = new Blob([values.identificationDocument[0]], {
-        type: values.identificationDocument[0].type,
-      });
-
-      formData = new FormData();
-      formData.append("blobFile", blobFile);
-      formData.append("fileName", values.identificationDocument[0].name);
-    }
-
     try {
       const patient = {
         userId: user.$id,
         name: values.name,
+        phone: values.phone,
         email: values.email,
       };
 
-      const existingPatient = await registerPatient(patient);
+      const existingPatient = await createUser(patient);
 
       if (existingPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
@@ -114,4 +101,4 @@ const RegisterForm = ({ user }: { user: User }) => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
