@@ -63,7 +63,6 @@ export const getPatient = async (userId: string) => {
 export const registerPatient = async ({identificationDocument, ...patient}: RegisterUserParams) => {
     try {
         let file;
-        console.log("Gets here!!");
 
         if (identificationDocument) {
             const inputFile = InputFile.fromBuffer(
@@ -83,7 +82,6 @@ export const registerPatient = async ({identificationDocument, ...patient}: Regi
                 ...patient
             }
         );
-        console.log("Patient Data:", newPatient);
 
         return parseStringify(newPatient);
     } catch (error) {
