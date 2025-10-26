@@ -105,7 +105,6 @@ const AppintmentForm = ({
           type,
         };
         const updateAppointment = await updatedAppointment(appointmentToUpdate);
-        // console.log("Appointment Data", appointment);
 
         if (updateAppointment) {
           setOpen && setOpen(false);
