@@ -19,7 +19,7 @@ const Login = async ({ params: { userId } }: SearchParamProps) => {
           />
           <LoginForm user={user} />
 
-          <p className="copyright py-12">@copy; 2025 CarePulse</p>
+          <p className="copyright py-12">@copy; 2026 CarePulse</p>
         </div>
       </section>
 
